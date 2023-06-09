@@ -100,15 +100,12 @@ void filtrado_descendente_recursivo(nat pos, TColaDePrioridadPersona &cp){
     if((hijo + 1 <= cp->tope) && (compararTFechas(obtenerFechaPrioridad(cp->array[hijo + 1]), obtenerFechaPrioridad(cp->array[hijo])) == -1)){
       hijo++;
     }
-    if(cp->invertido){
-      
-    }
     if(compararTFechas(obtenerFechaPrioridad(cp->array[hijo]), obtenerFechaPrioridad(cp->array[pos])) == -1){
       TPersona swap = cp->array[pos];
       cp->array[pos] = cp->array[hijo];
       cp->array[hijo] = swap;
+      filtrado_descendente_recursivo(hijo, cp);
     }
-    filtrado_descendente_recursivo(hijo, cp);
   }
 }
 
