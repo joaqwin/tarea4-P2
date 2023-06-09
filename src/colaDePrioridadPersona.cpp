@@ -7,14 +7,16 @@ struct rep_colaDePrioridadPersona {
   TFecha* esta;
   nat tope;
   nat max;
+  bool invertido;
 };
 
 TColaDePrioridadPersona crearCP(nat N) {
   TColaDePrioridadPersona nuevo = new rep_colaDePrioridadPersona;
   nuevo->tope = 0;
   nuevo->max = N;
-  nuevo->array = new TPersona[N];
-  for(nat i = 0; i<N; i++){
+  nuevo->invertido = false;
+  nuevo->array = new TPersona[N+1];
+  for(nat i = 1; i<=N; i++){
     nuevo->array[i] = NULL;
   }
   nuevo->esta = new TFecha[N+1];
@@ -22,10 +24,15 @@ TColaDePrioridadPersona crearCP(nat N) {
     nuevo->esta[j] = NULL;
   }
   return nuevo;
-} 
+}
 
 void invertirPrioridad(TColaDePrioridadPersona &cp) {
-
+  for(nat i = 1; i < cp->tope; i++){
+    TPersona min = cp->array[1];
+    cp->array[1] = cp->array[cp->tope - i + 1];
+    cp->array[cp->tope - i + 1] = min;
+    //filtrado_descendente_recursivo(cp->array, 1);
+  }
 }
 
 void liberarCP(TColaDePrioridadPersona &cp) {
@@ -87,8 +94,35 @@ void filtrado_descendente(nat pos, TColaDePrioridadPersona &cp){
   cp->array[pos] = swap;
 }
 
+void filtrado_descendente_recursivo(nat pos, TColaDePrioridadPersona &cp){
+  if(pos*2 <= cp->tope){
+    nat hijo = 2*pos;
+    if((hijo + 1 <= cp->tope) && (compararTFechas(obtenerFechaPrioridad(cp->array[hijo + 1]), obtenerFechaPrioridad(cp->array[hijo])) == -1)){
+      hijo++;
+    }
+    if(cp->invertido){
+      
+    }
+    if(compararTFechas(obtenerFechaPrioridad(cp->array[hijo]), obtenerFechaPrioridad(cp->array[pos])) == -1){
+      TPersona swap = cp->array[pos];
+      cp->array[pos] = cp->array[hijo];
+      cp->array[hijo] = swap;
+    }
+    filtrado_descendente_recursivo(hijo, cp);
+  }
+}
+
 void eliminarPrioritaria(TColaDePrioridadPersona &cp) {
-  
+  if(cp->tope > 0){
+    cp->esta[idTPersona(cp->array[1])] = NULL;
+    liberarTPersona(cp->array[1]);
+    cp->array[1] = cp->array[cp->tope];
+    cp->tope--;
+    if(cp->tope > 0){
+      //filtrado_descendente(1, cp);
+      filtrado_descendente_recursivo(1, cp);
+    }
+  }
 }
 
 bool estaEnCP(nat id, TColaDePrioridadPersona cp) {
