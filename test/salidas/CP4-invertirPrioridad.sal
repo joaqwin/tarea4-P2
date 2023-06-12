@@ -23,9 +23,9 @@ Fecha: 5/10/2022
 Evento 1:  Evento1
 Fecha: 6/10/2022
 42>43>#  ahora la prioritaria es la Persona 6.
-44>Persona 5: Persona5, 10 años
+44>Persona 6: Persona6, 10 años
 Evento 1:  Evento1
-Fecha: 5/10/2022
+Fecha: 6/10/2022
 45>#  creo Persona 3 y agrego a cola.
 46>47>48>49>50>51>Persona 3: Persona3, 10 años
 Evento 1:  Evento1
@@ -39,19 +39,19 @@ Fecha: 5/10/2020
 Evento 1:  Evento1
 Fecha: 19/10/2022
 68>69>#  la prioritaria es la persona 10.
-70>Persona 2: Persona2, 10 años
+70>Persona 10: Persona10, 10 años
 Evento 1:  Evento1
-Fecha: 5/10/2020
+Fecha: 19/10/2022
 71>#  la fecha prioritaria de la persona 10 es 19/10/2022.
 72>19/10/2022
 73>#  la fecha prioritaria de la persona 5 es 5/10/2022.
 74>5/10/2022
 75>#  elimino la persona prioritaria y verifico.
-76>77>La persona 10 está en la cola de prioridad.
+76>77>La persona 10 no está en la cola de prioridad.
 78>#  ahora la prioritaria es la persona 3.
-79>Persona 5: Persona5, 10 años
+79>Persona 3: Persona3, 10 años
 Evento 1:  Evento1
-Fecha: 5/10/2022
+Fecha: 9/10/2022
 80>#  elimino 3 veces la prioritaria y verifico que la cola no es vacía.
 81>82>83>84>La cola de prioridad no está vacía.
 85>#  elimino una mas y ahora si es vacia.
@@ -86,25 +86,25 @@ Fecha: 19/10/2022
 Evento 1:  Evento1
 Fecha: 5/10/2020
 134>#  invierto la prioridad en una cola con elementos, debe modificar la cola y la prioritaria es la persona 10.
-135>136>Persona 5: Persona5, 10 años
+135>136>Persona 10: Persona10, 10 años
 Evento 1:  Evento1
-Fecha: 5/10/2022
+Fecha: 19/10/2022
 137>#  elimino la persona prioritaria y ahora la nueva prioritaria es 3.
-138>139>Persona 2: Persona2, 10 años
+138>139>Persona 3: Persona3, 10 años
 Evento 1:  Evento1
-Fecha: 5/10/2020
+Fecha: 9/10/2022
 140>#  la fecha de prioridad de 3 es 9/10/2022.
 141>9/10/2022
 142>#  voy eliminando y verificando, el orden es 6, 5, 2 y 10.
 143>144>Persona 6: Persona6, 10 años
 Evento 1:  Evento1
 Fecha: 6/10/2022
-145>146>Persona 3: Persona3, 10 años
+145>146>Persona 5: Persona5, 10 años
 Evento 1:  Evento1
-Fecha: 9/10/2022
-147>148>Persona 10: Persona10, 10 años
+Fecha: 5/10/2022
+147>148>Persona 2: Persona2, 10 años
 Evento 1:  Evento1
-Fecha: 19/10/2022
+Fecha: 5/10/2020
 149>#  queda un elemento en la cola.
 150>La cola de prioridad no está vacía.
 151>152>#  ahora la cola esta vacia.

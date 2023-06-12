@@ -26,15 +26,6 @@ TColaDePrioridadPersona crearCP(nat N) {
   return nuevo;
 }
 
-void invertirPrioridad(TColaDePrioridadPersona &cp) {
-  for(nat i = 1; i < cp->tope; i++){
-    TPersona min = cp->array[1];
-    cp->array[1] = cp->array[cp->tope - i + 1];
-    cp->array[cp->tope - i + 1] = min;
-    //filtrado_descendente_recursivo(cp->array, 1);
-  }
-}
-
 void liberarCP(TColaDePrioridadPersona &cp) {
   for(nat i = 1; i<=cp->tope; i++){
     liberarTPersona(cp->array[i]);
@@ -51,11 +42,20 @@ TFecha obtenerFechaPrioridad(TPersona persona){
 
 void filtrado_ascendente(nat pos, TColaDePrioridadPersona &cp){
   TPersona swap = cp->array[pos];
-  while((pos > 1) && (compararTFechas(obtenerFechaPrioridad(cp->array[pos / 2]), obtenerFechaPrioridad(swap))) == 1){
-    cp->array[pos] = cp->array[pos/2];
-    pos = pos/2;
+  if(!cp->invertido){
+    while((pos > 1) && (compararTFechas(obtenerFechaPrioridad(cp->array[pos / 2]), obtenerFechaPrioridad(swap))) == 1){
+      cp->array[pos] = cp->array[pos/2];
+      pos = pos/2;
+    }
+    cp->array[pos] = swap;
+  }else{
+    while((pos > 1) && (compararTFechas(obtenerFechaPrioridad(cp->array[pos / 2]), obtenerFechaPrioridad(swap))) == -1){
+      cp->array[pos] = cp->array[pos/2];
+      pos = pos/2;
+    }
+    cp->array[pos] = swap;
   }
-  cp->array[pos] = swap;
+  
 }
 
 void insertarEnCP(TPersona persona, TColaDePrioridadPersona &cp) {
@@ -63,9 +63,16 @@ void insertarEnCP(TPersona persona, TColaDePrioridadPersona &cp) {
     cp->tope++;
     cp->array[cp->tope] = persona;
     cp->esta[idTPersona(persona)] = obtenerFechaPrioridad(persona);
-    if((cp->tope != 1) && (compararTFechas(obtenerFechaPrioridad(cp->array[cp->tope/2]),obtenerFechaPrioridad(persona)) == 1)){
-      filtrado_ascendente(cp->tope, cp);
+    if(!cp->invertido){
+      if((cp->tope != 1) && (compararTFechas(obtenerFechaPrioridad(cp->array[cp->tope/2]),obtenerFechaPrioridad(persona)) == 1)){
+        filtrado_ascendente(cp->tope, cp);
+      }
+    }else{
+      if((cp->tope != 1) && (compararTFechas(obtenerFechaPrioridad(cp->array[cp->tope/2]),obtenerFechaPrioridad(persona)) == -1)){
+        filtrado_ascendente(cp->tope, cp);
+      }
     }
+    
   }
 }
 
@@ -97,15 +104,28 @@ void filtrado_descendente(nat pos, TColaDePrioridadPersona &cp){
 void filtrado_descendente_recursivo(nat pos, TColaDePrioridadPersona &cp){
   if(pos*2 <= cp->tope){
     nat hijo = 2*pos;
-    if((hijo + 1 <= cp->tope) && (compararTFechas(obtenerFechaPrioridad(cp->array[hijo + 1]), obtenerFechaPrioridad(cp->array[hijo])) == -1)){
-      hijo++;
+    if(!cp->invertido){
+      if((hijo + 1 <= cp->tope) && (compararTFechas(obtenerFechaPrioridad(cp->array[hijo + 1]), obtenerFechaPrioridad(cp->array[hijo])) == -1)){
+        hijo++;
+      }
+      if(compararTFechas(obtenerFechaPrioridad(cp->array[hijo]), obtenerFechaPrioridad(cp->array[pos])) == -1){
+        TPersona swap = cp->array[pos];
+        cp->array[pos] = cp->array[hijo];
+        cp->array[hijo] = swap;
+        filtrado_descendente_recursivo(hijo, cp);
+      }
+    }else{
+      if((hijo + 1 <= cp->tope) && (compararTFechas(obtenerFechaPrioridad(cp->array[hijo + 1]), obtenerFechaPrioridad(cp->array[hijo])) == 1)){
+        hijo++;
+      }
+      if(compararTFechas(obtenerFechaPrioridad(cp->array[hijo]), obtenerFechaPrioridad(cp->array[pos])) == 1){
+        TPersona swap = cp->array[pos];
+        cp->array[pos] = cp->array[hijo];
+        cp->array[hijo] = swap;
+        filtrado_descendente_recursivo(hijo, cp);
+      }
     }
-    if(compararTFechas(obtenerFechaPrioridad(cp->array[hijo]), obtenerFechaPrioridad(cp->array[pos])) == -1){
-      TPersona swap = cp->array[pos];
-      cp->array[pos] = cp->array[hijo];
-      cp->array[hijo] = swap;
-      filtrado_descendente_recursivo(hijo, cp);
-    }
+    
   }
 }
 
@@ -131,4 +151,14 @@ bool estaEnCP(nat id, TColaDePrioridadPersona cp) {
 
 TFecha prioridad(nat id, TColaDePrioridadPersona cp){
   return cp->esta[id];
+}
+
+void invertirPrioridad(TColaDePrioridadPersona &cp) {
+  cp->invertido = !cp->invertido;
+  for(nat i = 1; i < cp->tope; i++){
+    TPersona min = cp->array[i];
+    cp->array[i] = cp->array[cp->tope - i + 1];
+    cp->array[cp->tope - i + 1] = min;
+    filtrado_descendente_recursivo(1, cp);
+  }
 }

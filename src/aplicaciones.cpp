@@ -2,7 +2,7 @@
 #include "../include/colaDePrioridadPersona.h"
 
 void listarEnOrden(TTablaPersonas t, char** nombres, nat n){
-    TColaDePrioridadPersona cola = crearCP(n);
+    TColaDePrioridadPersona cola = crearCP(MAX_ID);
     for(nat i = 0; i<n; i++){
         if(perteneceATTablaPersonas(t, nombres[i])){
             TPersona copia = copiarTPersona(obtenerPersonaDeTTablaPersonas(t, nombres[i]));
