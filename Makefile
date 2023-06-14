@@ -99,7 +99,7 @@ IDS_PUBLICOS = tarea3-combinado \
 		CP5-tiempo \
 		aplicaciones1-listarEnOrden \
 
-IDS_PRIVADOS = 
+IDS_PRIVADOS =
 
 CASOS = $(IDS_PUBLICOS) $(IDS_PRIVADOS)
 

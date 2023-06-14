@@ -48,14 +48,14 @@ bool perteneceATTablaPersonas(TTablaPersonas tabla, const char nombre[100]);
 TPersona obtenerPersonaDeTTablaPersonas(TTablaPersonas tabla, const char nombre[100]);
 
 // Función para liberar la memoria asignada a una TTablaPersonas (tabla) de personas
-// La función es O(n*m) peor caso, donde n es la cantidad de personas en la tabla y m es la cantidad de eventos de la agenda con mas eventos entre todas las personas de la tabla.
+// La función es O(n*m + max) peor caso, donde n es la cantidad de personas en la tabla y m es la cantidad de eventos de la agenda con mas eventos entre todas las personas de la tabla.
 void liberarTTablaPersonas(TTablaPersonas &tabla);
 
 // Función para imprimir todas las personas de la TTablaPersonas "tabla" .
 // Imprime cada persona de la tabla, en orden creciente de posiciones asociadas en la tabla.
 // En caso de que haya más de una persona en la misma posición, se deben imprimir por orden
 // de ingreso a la tabla, desde la más reciente a la menos.
-// La función es Theta(n*m) peor caso, donde n es la cantidad de personas en la tabla y m es la cantidad de eventos de la agenda con mas eventos entre todas las personas de la tabla.
+// La función es Theta(n*m + max) peor caso, donde n es la cantidad de personas en la tabla y m es la cantidad de eventos de la agenda con mas eventos entre todas las personas de la tabla.
 void imprimirTTablaPersonas(TTablaPersonas tabla);
 
 #endif  // TABLAPRESONAS_H

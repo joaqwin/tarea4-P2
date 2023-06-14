@@ -88,8 +88,8 @@ TPersona prioritaria(TColaDePrioridadPersona cp);
 /*
   Elimina de 'cp' la persona prioritaria y libera la memoria asociada.
   Si estaVacioCP(cp) la operación no tiene efecto.
-  El tiempo de ejecución en el peor caso es Theta(log N), siendo 'N' el parámetro
-  pasado en crearCP.
+  El tiempo de ejecución en el peor caso es O(log N + m), siendo 'N' el parámetro
+  pasado en crearCP y 'm' la cantidad de eventos en la agenda de la persona prioritaria.
  */
 void eliminarPrioritaria(TColaDePrioridadPersona &cp);
 
